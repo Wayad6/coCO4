@@ -1,0 +1,194 @@
+
+
+body{
+    background-color: rgb(238, 238, 238);
+    margin: 0;
+    transition: 2s ease;
+
+}
+
+    /* Styles spécifiques au mode nuit */
+    body.dark-mode {
+      margin: 0;
+      background-color: #333;
+      color: #fff;
+      transition: 2s ease;
+    }
+    .divnuit{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+    }
+    
+    button {
+      background-color: #34495e; /* Couleur de fond du bouton */
+      color: #ecf0f1; /* Couleur du texte */
+      padding: 0px 20px; /* Espacement interne du bouton */
+      border: none; /* Supprimer la bordure */
+      border-radius: 5px; /* Coins arrondis */
+      cursor: pointer; /* Curseur pointer au survol */
+      font-size: 35px; /* Taille de la police */
+      margin-right: 8px; /* Marge à droite pour positionner à la fin */
+      transition: background-color 0.3s, color 0.3s; /* Animation de transition */
+      margin-top: 8px;
+    }
+    
+    .buttonNuit:hover {
+      background-color: #2c3e50; /* Couleur de fond au survol */
+      color: #bdc3c7; /* Couleur du texte au survol */
+    }
+    
+    header {
+      background-color: rgba(255, 255, 255, 0.6); /* Couleur de fond avec opacité au scroll */
+      backdrop-filter: blur(3px); /* Effet de flou */
+      background-size: cover;
+      height: 70px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      border-radius: 0px 0px 10px 10px;
+    
+  }
+  
+  
+ 
+
+.logo {
+  position: fixed;
+  font-size: 28px;
+  top: 2px;
+  left: 7px;
+  width: auto;
+  height: 100px;
+  font-weight: bold;
+  color: #F48A38;
+}
+
+
+
+
+
+
+
+.divg{
+  display: flex ;
+  margin: auto;
+  margin-top: 35px;
+  width: auto ;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cdivcr{
+  display: flex;
+  border-radius: 5px;
+}
+@keyframes animerclique {
+    0% {
+      transform: rotate(8deg);
+      color: blue;
+    }
+  
+    50% {
+        transform: rotate(-7deg);
+        color: red;
+    }
+    100% {
+      transform: rotate(2deg);
+      color: white;
+  }
+  }
+  
+  .cdivcr:hover {
+    animation: animerclique 2s ease;
+    color: rgb(159, 255, 4);
+  }
+  
+
+
+/*pour telephone*/
+@media screen and (max-width: 449px) {
+   
+    .cdivcr{
+        margin: 3px;
+        font-size: 18px;
+        min-width: 100px;
+        font-size: 16px;
+        height: 32px;
+        margin-top: 5px;
+        padding: 4px;
+        flex: 1;
+        transition: 2s ease;
+
+    }
+    .cdivcr2{
+      margin: 6px;
+      font-size: 20px;
+      width: 100%;
+      font-size: 20px;
+      height: 110px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      transition: 2s ease;
+  }
+}
+
+/*pour tablette*/
+@media screen and (min-width: 450px) and (max-width: 699px){
+    .cdivcr{
+        margin: 5px;
+        font-size: 20px;
+        min-width: 115px;
+        font-size: 18px;
+        height: 38px;
+        margin-top: 8px;
+        padding: 6px;
+        flex: 1;
+        transition: 2s ease;
+
+    }
+    .cdivcr2{
+      margin: 6px;
+      font-size: 20px;
+      min-width: 220px;
+      font-size: 20px;
+      height: 110px;
+      margin-top: 10px;
+      padding: 10px;
+      flex: 1;
+      transition: 2s ease;
+  }
+}
+
+/*pour grand ecrans*/
+@media screen and (min-width: 700px) {
+    .cdivcr{
+        margin: 6px;
+        font-size: 20px;
+        min-width: 150px;
+        font-size: 20px;
+        height: 50px;
+        margin-top: 10px;
+        padding: 7px;
+        flex: 1;
+        transition: 2s ease;
+
+    }
+    .cdivcr2{
+      margin: 6px;
+      font-size: 20px;
+      min-width: 230px;
+      font-size: 20px;
+      height: 120px;
+      margin-top: 10px;
+      padding: 10px;
+      flex: 1;
+      transition: 2s ease;
+  }
+}
+
+
+
+
