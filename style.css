@@ -12,7 +12,7 @@ body{
       margin: 0;
       background-color: #333;
       color: #fff;
-      transition: 2s ease;
+      
     }
     .divnuit{
       display: flex;
@@ -30,7 +30,7 @@ body{
       cursor: pointer; /* Curseur pointer au survol */
       font-size: 35px; /* Taille de la police */
       margin-right: 8px; /* Marge à droite pour positionner à la fin */
-      transition: background-color 0.3s, color 0.3s; /* Animation de transition */
+      
       margin-top: 8px;
     }
     
