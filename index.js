@@ -1,9 +1,6 @@
 
-console.log('Hello World!');
 
 let nomClasseCourante = "cdivcr";
-
-
 let nombredecouleur = 0;
 const limite = 150;
 
@@ -34,8 +31,6 @@ window.addEventListener('scroll', function() {
 genererCouleurs();
 
 
-
-
 function genererElementCouleur(codeCouleur) {
   const nouveauxdive = document.createElement('div');
   nouveauxdive.classList.add(nomClasseCourante);
@@ -53,7 +48,7 @@ function genererElementCouleur(codeCouleur) {
     navigator.clipboard.writeText(texteACopier).then(function() {
       // Affichez un message de confirmation
       const messageCopie = document.createElement('div');
-      messageCopie.textContent = 'copié !';
+      messageCopie.textContent = 'copié';
       messageCopie.style.margin = '2px';
 
       nouveauxdive.appendChild(messageCopie);
@@ -108,7 +103,6 @@ function ajouterElementCouleur() {
 }
 
 
-
 /*
 //document.addEventListener("DOMContentLoaded", function() {
   const toggleDarkModeButton = document.getElementById("toggleDarkMode");
@@ -131,8 +125,6 @@ document.addEventListener("DOMContentLoaded", function() {
     stoggleDarkModeButton.textContent = isDarkModeEnabled ? "sunny" : "bedtime" ;
   });
 });
-
-
 
 
 
