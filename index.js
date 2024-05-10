@@ -66,6 +66,7 @@ function genererElementCouleur(codeCouleur) {
   return nouveauxdive;
 }
 
+/*
 
 function genererCouleurAleatoire(){
   const couleur = ['1','2','3','4','5','7','8','9','0','A','B','C','D','E','F'];
@@ -79,6 +80,10 @@ function genererCouleurAleatoire(){
   return couleur[coul1] + couleur[coul2] +
          couleur[coul3] + couleur[coul4] +
          couleur[coul5] + couleur[coul6];
+}*/
+
+function genererCouleurAleatoire(){
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 
