@@ -1,4 +1,4 @@
-*/
+/*
 
 let nomClasseCourante = "cdivcr";
 let nombredecouleur = 0;
