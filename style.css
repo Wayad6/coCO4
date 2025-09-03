@@ -188,7 +188,7 @@ tbody tr:nth-of-type(even) {
 }
 
 /* Pour les écrans très petits (smartphones) */
-@media (max-width: 480px) {
+@media (max-width: 380px) {
     .block {
         padding: 20px;
     }
