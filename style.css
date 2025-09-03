@@ -1,190 +1,288 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* --- Variables de couleur et polices (pour une modification facile) --- */
+:root {
+  --primary-color: #6a5acd; /* Un violet moderne */
+  --primary-hover-color: #5a4bbf;
+  --background-color: #f4f7f9;
+  --card-background-color: #ffffff;
+  --text-color: #333333;
+  --heading-color: #111111;
+  --border-color: #dfe7ef;
+  --error-color: #e74c3c;
+  --error-background-color: #fbeae8;
+  --success-color: #2ecc71;
+  --font-family: 'Poppins', sans-serif; /* Police plus moderne, à ajouter dans votre HTML */
+}
+
+/* --- Styles généraux et reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Modèle de boîte plus intuitif */
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: rgb(238, 238, 238);
-    margin: 0;
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 20px;
+  background: var(--background-color);
+  color: var(--text-color);
 
-}
-
-    /* Styles spécifiques au mode nuit */
-    body.dark-mode {
-      margin: 0;
-      background-color: #333;
-      color: #fff;
-      
-    }
-   
-    
-
-/* Style pour la navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: rgba(0, 0, 255, 0.2); /* bleu léger et transparent */
-    backdrop-filter: blur(8px); /* Effet de flou pour un look moderne */
-    color: #fff;
-    z-index: 1000; /* Assure que la navbar est toujours au-dessus */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
-}
-
-/* Logo de la navbar */
-.navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-/* Boutons de la navbar */
-.navbar-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    padding: 8px 16px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.nav-btn:hover {
-    background-color: #0056b3;
-}
-
-
-
-.divg{
-  display: flex ;
-  margin: auto;
-  margin-top: 35px;
-  width: auto ;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.cdivcr{
+/* Conteneur principal pour mieux gérer le layout */
+.main-container {
+    width: 100%;
+    max-width: 600px; /* Largeur maximale sur grand écran */
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 2.2rem; /* Taille augmentée pour plus d'impact */
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: var(--heading-color);
+  font-weight: 500;
+  border-bottom: 2px solid var(--primary-color); /* Ligne décorative */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* --- Sections & cartes --- */
+.block {
+  background: var(--card-background-color);
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Ombre pour donner de la profondeur */
+  border: 1px solid var(--border-color);
+  
+}
+
+/* --- Groupes de formulaire --- */
+.form-group {
   display: flex;
-  border-radius: 5px;
-}
-@keyframes animerclique {
-    0% {
-      transform: rotate(8deg);
-      color: blue;
-    }
-  
-    50% {
-        transform: rotate(-7deg);
-        color: red;
-    }
-    100% {
-      transform: rotate(2deg);
-      color: white;
-  }
-  }
-  
-  .cdivcr:hover {
-    animation: animerclique 2s ease;
-    color: rgb(159, 255, 4);
-  }
-  
-
-
-/*pour telephone*/
-@media screen and (max-width: 449px) {
-   
-    .cdivcr{
-        margin: 3px;
-        font-size: 18px;
-        min-width: 100px;
-        font-size: 16px;
-        height: 60px;
-        margin-top: 5px;
-        padding: 4px;
-        flex: 1;
-        transition: 2s ease;
-
-    }
-    .cdivcr2{
-      margin: 6px;
-      font-size: 20px;
-      width: 100%;
-      font-size: 20px;
-      height: 110px;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      transition: 2s ease;
-  }
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
-/*pour tablette*/
-@media screen and (min-width: 450px) and (max-width: 699px){
-    .cdivcr{
-        margin: 5px;
-        font-size: 20px;
-        min-width: 115px;
-        font-size: 18px;
-        height: 70px;
-        margin-top: 8px;
-        padding: 6px;
-        flex: 1;
-        transition: 2s ease;
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
 
+.form-group input {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Amélioration visuelle quand on clique sur un champ */
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+}
+
+input.error {
+  border-color: var(--error-color);
+  background-color: var(--error-background-color);
+}
+
+/* --- Messages d'erreur --- */
+.error-message {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: none; /* Reste caché par défaut */
+}
+
+/* --- Bouton --- */
+button {
+  width: 100%; /* Le bouton prend toute la largeur */
+  padding: 12px 20px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 10px; /* Espace au-dessus du bouton */
+}
+
+button:hover {
+  background: var(--primary-hover-color);
+  transform: translateY(-2px); /* Léger effet au survol */
+}
+
+button:active {
+    transform: translateY(0); /* Effet au clic */
+}
+
+/* --- Tableau résultat --- */
+.table-container {
+    overflow-x: auto; /* Permet au tableau de scroller horizontalement sur mobile */
+}
+
+table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  
+}
+
+th {
+  background: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Lignes de couleurs alternées pour une meilleure lisibilité */
+tbody tr:nth-of-type(even) {
+  background-color: var(--background-color);
+}
+
+
+/* --- RESPONSIVE DESIGN --- */
+/* Pour les écrans plus petits que 768px (tablettes et mobiles) */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+    align-items: flex-start; /* Aligne le contenu en haut sur mobile */
+  }
+
+  .main-container {
+    max-width: 100%; /* Le conteneur prend toute la largeur */
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Pour les écrans très petits (smartphones) */
+@media (max-width: 480px) {
+    .block {
+        padding: 20px;
     }
-    .cdivcr2{
-      margin: 6px;
-      font-size: 20px;
-      min-width: 220px;
-      font-size: 20px;
-      height: 110px;
-      margin-top: 10px;
+
+    button, .form-group input {
+        font-size: 0.95rem; /* Réduit légèrement la taille du texte pour les petits écrans */
+    }
+}
+
+
+
+    .explanation-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+    
+    .explanation-container h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    
+    .explanation-container p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .explanation-container ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .explanation-container li {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    
+    .highlight {
+      background-color: #fff8e1;
+      padding: 15px;
+      border-left: 4px solid #ffc107;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    
+    .formula {
+      text-align: center;
+      font-style: italic;
+      margin: 20px 0;
       padding: 10px;
+      background-color: #e8f5e9;
+      border-radius: 4px;
+    }
+    
+    .note {
+      font-size: 0.9em;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    
+        .github-section {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #6cc644;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .github-icon {
+      font-size: 2em;
+      margin-right: 15px;
+      color: #24292e;
+    }
+    
+    .github-text {
       flex: 1;
-      transition: 2s ease;
-  }
-}
-
-/*pour grand ecrans*/
-@media screen and (min-width: 700px) {
-    .cdivcr{
-        margin: 6px;
-        font-size: 20px;
-        min-width: 150px;
-        font-size: 20px;
-        height: 75px;
-        margin-top: 10px;
-        padding: 7px;
-        flex: 1;
-        transition: 2s ease;
-
     }
-    .cdivcr2{
-      margin: 6px;
-      font-size: 20px;
-      min-width: 230px;
-      font-size: 20px;
-      height: 120px;
-      margin-top: 10px;
-      padding: 10px;
-      flex: 1;
-      transition: 2s ease;
-  }
-}
-
-
-
-
+    
+    .github-link {
+      color: #0366d6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .github-link:hover {
+      text-decoration: underline;
+    }
