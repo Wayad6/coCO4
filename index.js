@@ -1,102 +1,109 @@
+// --- Maths ---
+function factorial(n) {
+  if (n === 0 || n === 1) return 1;
+  let res = 1;
+  for (let i = 2; i <= n; i++) res *= i;
+  return res;
+}
 
-let nomClasseCourante = "cdivcr";
-let nombredecouleur = 0;
-const limite = 150;
-const divgenerale = document.querySelector('#divgnr');
+function poisson(k, lambdaVal) {
+  if (lambdaVal < 0 || k < 0) return 0;
+  return (Math.pow(lambdaVal, k) * Math.exp(-lambdaVal)) / factorial(k);
+}
 
-function genererCouleurs() {
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < limite; i++) {
-        const nouvelElement = ajouterElementCouleur();
-        fragment.appendChild(nouvelElement);
-        nombredecouleur++;
+// --- UI erreurs ---
+function showError(inputId, message) {
+  const input = document.getElementById(inputId);
+  const errorDiv = document.getElementById("error-" + inputId);
+  if (!input || !errorDiv) return;
+  input.classList.add("error");
+  errorDiv.innerText = message;
+  errorDiv.style.display = "block";
+}
+
+function clearErrors() {
+  document.querySelectorAll(".error-message").forEach(div => {
+    div.style.display = "none";
+    div.innerText = "";
+  });
+  document.querySelectorAll("input").forEach(input => {
+    input.classList.remove("error");
+  });
+}
+
+// --- Calcul principal ---
+function calculer() {
+  clearErrors();
+  let valid = true;
+
+  const fields = [
+    { id: "homeMatches", label: "Matchs domicile" },
+    { id: "homeGoalsScored", label: "Buts marqués domicile" },
+    { id: "homeGoalsConceded", label: "Buts encaissés domicile" },
+    { id: "awayMatches", label: "Matchs extérieur" },
+    { id: "awayGoalsScored", label: "Buts marqués extérieur" },
+    { id: "awayGoalsConceded", label: "Buts encaissés extérieur" }
+  ];
+
+  // Validation
+  fields.forEach(field => {
+    const el = document.getElementById(field.id);
+    const value = el?.value ?? "";
+    if (value === "") {
+      showError(field.id, `Merci d’indiquer ${field.label.toLowerCase()}.`);
+      valid = false;
+    } else if (Number(value) < 0) {
+      showError(field.id, `${field.label} doit être positif.`);
+      valid = false;
     }
-    divgenerale.appendChild(fragment);
-}
+  });
 
-function ajouterElementCouleur() {
-    const couleurAleatoire = genererCouleurAleatoire();
-    const tirage = Math.floor(Math.random() * 9) + 1;
-    let couleurAleatoires;
+  const hMVal = Number(document.getElementById("homeMatches").value);
+  const aMVal = Number(document.getElementById("awayMatches").value);
+  if (hMVal === 0) { showError("homeMatches", "Le nombre de matchs domicile doit être > 0."); valid = false; }
+  if (aMVal === 0) { showError("awayMatches", "Le nombre de matchs extérieur doit être > 0."); valid = false; }
 
-    if (tirage >= 8) {
-        couleurAleatoires = couleurAleatoire.slice(0, 4);
-    } else if (tirage >= 6) {
-        couleurAleatoires = couleurAleatoire.slice(0, 3);
-    } else {
-        couleurAleatoires = couleurAleatoire;
+  if (!valid) return;
+
+  // --- Lecture des valeurs ---
+  const hM  = hMVal;
+  const hGS = Number(document.getElementById("homeGoalsScored").value);
+  const hGC = Number(document.getElementById("homeGoalsConceded").value);
+  const aM  = aMVal;
+  const aGS = Number(document.getElementById("awayGoalsScored").value);
+  const aGC = Number(document.getElementById("awayGoalsConceded").value);
+
+  // Moyennes
+  const homeAvgScored   = hGS / hM;
+  const homeAvgConceded = hGC / hM;
+  const awayAvgScored   = aGS / aM;
+  const awayAvgConceded = aGC / aM;
+
+  const lambdaHome = (homeAvgScored + awayAvgConceded) / 2;
+  const lambdaAway = (awayAvgScored + homeAvgConceded) / 2;
+
+  // Scores 0–5
+  const scores = [];
+  for (let i = 0; i <= 10; i++) {
+    for (let j = 0; j <= 10; j++) {
+      const prob = poisson(i, lambdaHome) * poisson(j, lambdaAway);
+      scores.push({ score: `${i} - ${j}`, prob });
     }
+  }
 
-    const nouvelElement = genererElementCouleur(couleurAleatoires);
-    return nouvelElement;
+  // Top 10
+  scores.sort((a, b) => b.prob - a.prob);
+  const top10 = scores.slice(0, 10);
+  const totalProb = top10.reduce((sum, item) => sum + item.prob, 0);
+
+  // --- Affichage ---
+  let html = `<h2>Top 10 scores les plus probables </h2>`;
+  html += `<p><strong>λ Domicile :</strong> ${lambdaHome.toFixed(2)} | <strong>λ Extérieur :</strong> ${lambdaAway.toFixed(2)}</p>`;
+  html += `<p><strong>Probabilité cumulée des 10 scores :</strong> ${(totalProb*100).toFixed(2)}%</p>`;
+  html += `<table><tr><th>Score</th><th>Probabilité (%)</th></tr>`;
+  top10.forEach(item => {
+    html += `<tr><td>${item.score}</td><td>${(item.prob*100).toFixed(2)}%</td></tr>`;
+  });
+  html += `</table>`;
+  document.getElementById("result").innerHTML = html;
 }
-
-function genererElementCouleur(codeCouleur) {
-    const nouveauxdive = document.createElement('div');
-    nouveauxdive.classList.add(nomClasseCourante);
-    nouveauxdive.id = 'divcree'
-    nouveauxdive.style.backgroundColor = '#' + codeCouleur;
-
-    const texteCodeCouleur = document.createElement('div');
-    texteCodeCouleur.textContent = '#' + codeCouleur;
-
-    nouveauxdive.addEventListener('click', function() {
-        const texteACopier = texteCodeCouleur.textContent;
-        navigator.clipboard.writeText(texteACopier).then(function() {
-            const messageCopie = document.createElement('div');
-            messageCopie.textContent = 'copié';
-            messageCopie.style.margin = '2px';
-            nouveauxdive.appendChild(messageCopie);
-            setTimeout(() => {
-                nouveauxdive.removeChild(messageCopie);
-            }, 2000);
-        }).catch(function(err) {
-            console.error('Erreur lors de la copie dans le presse-papiers : ', err);
-        });
-    });
-
-    nouveauxdive.appendChild(texteCodeCouleur);
-    return nouveauxdive;
-}
-
-function genererCouleurAleatoire() {
-    return Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
-}
-
-function changerNomClasse() {
-    const changercl = document.querySelector('#changeclasee');
-    let elements = document.querySelectorAll("*");
-    for (let element of elements) {
-        element.classList.replace(nomClasseCourante, nomClasseCourante === "cdivcr" ? "cdivcr2" : "cdivcr");
-    }
-    nomClasseCourante = nomClasseCourante === "cdivcr" ? "cdivcr2" : "cdivcr";
-    changercl.textContent = changercl.textContent === "cards" ? "width_full" : "cards";
-}
-
-function initEventListeners() {
-    document.querySelector("#button").addEventListener("click", changerNomClasse);
-    document.addEventListener("DOMContentLoaded", function() {
-        const toggleDarkModeButton = document.getElementById("toggleDarkMode");
-        const stoggleDarkModeButton = document.getElementById("stoggleDarkMode");
-
-        toggleDarkModeButton.addEventListener("click", function() {
-            document.body.classList.toggle("dark-mode");
-            const isDarkModeEnabled = document.body.classList.contains("dark-mode");
-            stoggleDarkModeButton.textContent = isDarkModeEnabled ? "sunny" : "bedtime";
-        });
-    });
-
-    window.addEventListener('scroll', function() {
-        const scrolltop = window.scrollY || document.documentElement.scrollTop;
-        const scrollheight = document.documentElement.scrollHeight;
-        const scrollclient = document.documentElement.clientHeight;
-        const pourcentage = (scrolltop / (scrollheight - scrollclient)) * 100;
-
-        if (pourcentage >= 90 && nombredecouleur !== 0) {
-            genererCouleurs();
-        }
-    });
-}
-
-genererCouleurs();
-initEventListeners();
