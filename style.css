@@ -1,203 +1,265 @@
 /* --- Variables de couleur et polices (pour une modification facile) --- */
 :root {
-  --primary-color: #6a5acd; /* Un violet moderne */
-  --primary-hover-color: #5a4bbf;
-  --background-color: #f4f7f9;
-  --card-background-color: #ffffff;
-  --text-color: #333333;
-  --heading-color: #111111;
-  --border-color: #dfe7ef;
-  --error-color: #e74c3c;
-  --error-background-color: #fbeae8;
-  --success-color: #2ecc71;
-  --font-family: 'Poppins', sans-serif; /* Police plus moderne, à ajouter dans votre HTML */
+--primary-color: #6a5acd;
+--primary-hover-color: #5a4bbf;
+--background-color: #f4f7f9;
+--card-background-color: #ffffff;
+--text-color: #333333;
+--heading-color: #111111;
+--border-color: #dfe7ef;
+--error-color: #e74c3c;
+--error-background-color: #fbeae8;
+--success-color: #2ecc71;
+--font-family: 'Poppins', sans-serif;
 }
 
-/* --- Styles généraux et reset --- */
+/* Reset et boîte modulaire */
 *,
 *::before,
 *::after {
-  box-sizing: border-box; /* Modèle de boîte plus intuitif */
+box-sizing: border-box;
 }
 
+/* Reset du body avec gestion mobile */
 body {
-  font-family: var(--font-family);
-  margin: 0;
-  padding: 20px;
-  background: var(--background-color);
-  color: var(--text-color);
-
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+font-family: var(--font-family);
+margin: 0;
+padding: 16px;
+background: var(--background-color);
+color: var(--text-color);
+line-height: 1.6;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
-/* Conteneur principal pour mieux gérer le layout */
+/* Conteneur principal responsive */
 .main-container {
-    width: 100%;
-    max-width: 600px; /* Largeur maximale sur grand écran */
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
 }
 
+/* Header centré avec adaptation mobile */
 header {
-  text-align: center;
-  margin-bottom: 30px;
+text-align: center;
+margin-bottom: 24px;
+padding: 0 12px;
 }
 
 h1 {
-  font-size: 2.2rem; /* Taille augmentée pour plus d'impact */
-  color: var(--heading-color);
-  font-weight: 600;
+font-size: 2.2rem;
+color: var(--heading-color);
+font-weight: 600;
+margin: 0;
+line-height: 1.2;
 }
 
 h2 {
-  font-size: 1.5rem;
-  color: var(--heading-color);
-  font-weight: 500;
-  border-bottom: 2px solid var(--primary-color); /* Ligne décorative */
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+font-size: 1.5rem;
+color: var(--heading-color);
+font-weight: 500;
+border-bottom: 2px solid var(--primary-color);
+padding-bottom: 8px;
+margin-bottom: 16px;
 }
 
-/* --- Sections & cartes --- */
+/* Blocs de contenu (cartes) */
 .block {
-  background: var(--card-background-color);
-  padding: 25px;
-  border-radius: 12px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Ombre pour donner de la profondeur */
-  border: 1px solid var(--border-color);
-  
+background: var(--card-background-color);
+padding: 24px;
+border-radius: 12px;
+margin-bottom: 24px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+border: 1px solid var(--border-color);
 }
 
-/* --- Groupes de formulaire --- */
+/* Groupe de formulaire */
 .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
+display: flex;
+flex-direction: column;
+margin-bottom: 16px;
 }
 
 .form-group label {
-  margin-bottom: 6px;
-  font-weight: 500;
-  font-size: 0.9rem;
+margin-bottom: 6px;
+font-weight: 500;
+font-size: 0.95rem;
+color: var(--text-color);
 }
 
-.form-group input {
-  padding: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+.form-group input,
+.form-group select {
+padding: 12px;
+border: 1px solid var(--border-color);
+border-radius: 8px;
+font-size: 1rem;
+transition: border-color 0.3s, box-shadow 0.3s;
+background-color: white;
 }
 
-/* Amélioration visuelle quand on clique sur un champ */
-.form-group input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
+.form-group input:focus,
+.form-group select:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.2);
 }
 
 input.error {
-  border-color: var(--error-color);
-  background-color: var(--error-background-color);
+border-color: var(--error-color);
+background-color: var(--error-background-color);
 }
 
-/* --- Messages d'erreur --- */
+/* Message d'erreur */
 .error-message {
-  color: var(--error-color);
-  font-size: 0.85rem;
-  margin-top: 5px;
-  display: none; /* Reste caché par défaut */
+color: var(--error-color);
+font-size: 0.85rem;
+margin-top: 5px;
+display: none;
 }
 
-/* --- Bouton --- */
+.error-message.active {
+display: block;
+}
+
+/* Bouton principal */
 button {
-  width: 100%; /* Le bouton prend toute la largeur */
-  padding: 12px 20px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  margin-top: 10px; /* Espace au-dessus du bouton */
+width: 100%;
+padding: 14px 20px;
+background: var(--primary-color);
+color: white;
+border: none;
+border-radius: 8px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.3s, transform 0.2s;
+margin-top: 10px;
 }
 
 button:hover {
-  background: var(--primary-hover-color);
-  transform: translateY(-2px); /* Léger effet au survol */
+background: var(--primary-hover-color);
 }
 
 button:active {
-    transform: translateY(0); /* Effet au clic */
+transform: translateY(0);
 }
 
-/* --- Tableau résultat --- */
+/* Tableau responsive */
 .table-container {
-    overflow-x: auto; /* Permet au tableau de scroller horizontalement sur mobile */
+overflow-x: auto;
+-webkit-overflow-scrolling: touch; /* Fluidité sur iOS */
+margin-top: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 table {
-  margin-top: 20px;
-  border-collapse: collapse;
-  width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+width: 100%;
+border-collapse: collapse;
+min-width: 400px; /* Évite que le tableau ne se rétrécisse trop */
 }
 
 th, td {
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  text-align: center;
-  
+padding: 12px 14px;
+border: 1px solid var(--border-color);
+text-align: center;
+font-size: 0.9rem;
 }
 
 th {
-  background: var(--primary-color);
-  color: white;
-  font-weight: 600;
-  text-align: center;
+background: var(--primary-color);
+color: white;
+font-weight: 600;
 }
 
-/* Lignes de couleurs alternées pour une meilleure lisibilité */
 tbody tr:nth-of-type(even) {
-  background-color: var(--background-color);
+background-color: var(--background-color);
 }
 
+/* --- RESPONSIVE DESIGN AMÉLIORÉ --- */
 
-/* --- RESPONSIVE DESIGN --- */
-/* Pour les écrans plus petits que 768px (tablettes et mobiles) */
+/* Tablettes et petits écrans */
 @media (max-width: 768px) {
-  body {
-    padding: 15px;
-    align-items: flex-start; /* Aligne le contenu en haut sur mobile */
-  }
-
-  .main-container {
-    max-width: 100%; /* Le conteneur prend toute la largeur */
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-  }
+body {
+padding: 12px;
+align-items: stretch; /* Étire le conteneur sur toute la largeur */
 }
 
-/* Pour les écrans très petits (smartphones) */
+.main-container {
+max-width: 100%;
+padding: 0;
+}
+
+h1 {
+font-size: 1.8rem;
+}
+
+h2 {
+font-size: 1.3rem;
+}
+
+.block {
+padding: 20px;
+margin-bottom: 20px;
+}
+}
+
+/* Smartphones très petits (ex: iPhone SE) */
+@media (max-width: 480px) {
+h1 {
+font-size: 1.6rem;
+}
+
+h2 {
+font-size: 1.2rem;
+}
+
+.form-group label {
+font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+font-size: 0.95rem;
+padding: 10px;
+}
+
+button {
+font-size: 1rem;
+padding: 12px;
+}
+
+th, td {
+padding: 10px 8px;
+font-size: 0.85rem;
+}
+
+.table-container {
+margin-top: 16px;
+}
+}
+
+/* Pour les écrans très étroits (< 380px) */
 @media (max-width: 380px) {
-    .block {
-        padding: 20px;
-    }
-
-    button, .form-group input {
-        font-size: 0.95rem; /* Réduit légèrement la taille du texte pour les petits écrans */
-    }
+body {
+padding: 10px;
 }
 
+.block {
+padding: 16px;
+}
+
+h1 {
+font-size: 1.5rem;
+}
+
+button,
+.form-group input {
+font-size: 0.9rem;
+}
+}
 
 
     .explanation-container {
