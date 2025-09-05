@@ -107,3 +107,16 @@ function calculer() {
   html += `</table>`;
   document.getElementById("result").innerHTML = html;
 }
+
+function toggleDarkMode() {
+  const body = document.body;
+  const btn = document.getElementById("darkModeBtn");
+  body.classList.toggle('dark-mode');
+  
+  // Change icône selon le mode
+  if (body.classList.contains("dark-mode")) {
+    btn.textContent = "☀️"; // Soleil pour mode sombre
+  } else {
+    btn.textContent = "🌙"; // Lune pour mode clair
+  }
+}
