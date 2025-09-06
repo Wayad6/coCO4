@@ -113,7 +113,46 @@ function calculer() {
   });
 
   const totalProb = homeWin + draw + awayWin; // devrait être ~1
-  console.log (totalProb)
+ // console.log (totalProb)
+  // --- Distribution des totaux de buts ---
+function calculerTotaux(scores) {
+  const totalGoalsDist = {};
+  
+  // Parcourir tous les scores (0-10)
+  scores.forEach(item => {
+    const [h, a] = item.score.split(" - ").map(Number);
+    const total = h + a;
+    
+    if (!totalGoalsDist[total]) totalGoalsDist[total] = 0;
+    totalGoalsDist[total] += item.prob;
+  });
+  
+  // Transformation en tableau et filtrage
+  const results = Object.entries(totalGoalsDist)
+    .map(([goals, prob]) => ({ goals: Number(goals), prob }))
+    .filter(r => r.prob >= 0.01) // on garde seulement >= 1%
+    .sort((a, b) => b.prob - a.prob); // tri du + probable au - probable
+  
+  // Probabilités utiles (Over/Under)
+  const under25 = Object.entries(totalGoalsDist)
+    .filter(([g]) => Number(g) <= 2)
+    .reduce((s, [, p]) => s + p, 0);
+  const over25 = Object.entries(totalGoalsDist)
+    .filter(([g]) => Number(g) >= 3)
+    .reduce((s, [, p]) => s + p, 0);
+  
+  // --- Affichage HTML ---
+  let html = `<h3>Distribution du total de buts </h3>`;
+  html += `<table><tr><th>Total de buts</th><th>Probabilité (%)</th></tr>`;
+  results.forEach(r => {
+    html += `<tr><td>${r.goals} buts</td><td>${(r.prob * 100).toFixed(2)}%</td></tr>`;
+  });
+  html += `</table>`;
+  html += `<p><strong>Moins de 2.5 buts :</strong> ${(under25*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Plus de 2.5 buts :</strong> ${(over25*100).toFixed(2)}%</p>`;
+  
+  return html;
+}
 
   // --- Affichage ---
   let html = `<hr />`
@@ -134,7 +173,8 @@ function calculer() {
   html += `<p><strong>Victoire visiteur :</strong> ${(awayWin/totalProb*100).toFixed(2)}%</p>`;
   html += `<p><strong>Les deux équipes marquent :</strong> ${(bttsYes/totalProb*100).toFixed(2)}%</p>`;
   html += `<p><strong>Au moins une ne marque pas :</strong> ${(bttsNo/totalProb*100).toFixed(2)}%</p>`;
-
+  html += `<hr />`
+  html += calculerTotaux(scores);
   document.getElementById("result").innerHTML = html;
 }
 
