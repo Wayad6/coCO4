@@ -82,7 +82,7 @@ function calculer() {
   const lambdaHome = (homeAvgScored + awayAvgConceded) / 2;
   const lambdaAway = (awayAvgScored + homeAvgConceded) / 2;
 
-  // Scores 0–5
+  // --- Génération de tous les scores (0 à 10) ---
   const scores = [];
   for (let i = 0; i <= 10; i++) {
     for (let j = 0; j <= 10; j++) {
@@ -91,32 +91,59 @@ function calculer() {
     }
   }
 
-  // Top 10
-  scores.sort((a, b) => b.prob - a.prob);
-  const top10 = scores.slice(0, 10);
-  const totalProb = top10.reduce((sum, item) => sum + item.prob, 0);
+  // --- Top 10 pour affichage ---
+  const top10 = [...scores].sort((a, b) => b.prob - a.prob).slice(0, 10);
+  const totalTopProb = top10.reduce((sum, item) => sum + item.prob, 0);
+
+  // --- Calcul des pourcentages 1X2 et BTTS sur tous les scores ---
+  let homeWin = 0, draw = 0, awayWin = 0;
+  let bttsYes = 0, bttsNo = 0;
+
+  scores.forEach(item => {
+    const [h, a] = item.score.split(" - ").map(Number);
+
+    // 1X2
+    if (h > a) homeWin += item.prob;
+    else if (h === a) draw += item.prob;
+    else awayWin += item.prob;
+
+    // BTTS
+    if (h > 0 && a > 0) bttsYes += item.prob;
+    else bttsNo += item.prob;
+  });
+
+  const totalProb = homeWin + draw + awayWin; // devrait être ~1
+  console.log (totalProb)
 
   // --- Affichage ---
-  let html = `<h2>Top 10 scores les plus probables </h2>`;
+  let html = `<hr />`
+  html += `<h2>Top 10 scores les plus probables </h2>`;
   html += `<p><strong>λ Domicile :</strong> ${lambdaHome.toFixed(2)} | <strong>λ Extérieur :</strong> ${lambdaAway.toFixed(2)}</p>`;
-  html += `<p><strong>Probabilité cumulée des 10 scores :</strong> ${(totalProb*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Probabilité cumulée des 10 scores :</strong> ${(totalTopProb*100).toFixed(2)}%</p>`;
   html += `<table><tr><th>Score</th><th>Probabilité (%)</th></tr>`;
   top10.forEach(item => {
     html += `<tr><td>${item.score}</td><td>${(item.prob*100).toFixed(2)}%</td></tr>`;
   });
   html += `</table>`;
+
+  // Affichage 1X2 et BTTS
+  html+= `<hr />`
+  html += `<h3 class="formula">Analyse supplémentaires </h3>`;
+  html += `<p><strong>Victoire domicile :</strong> ${(homeWin/totalProb*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Match nul :</strong> ${(draw/totalProb*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Victoire visiteur :</strong> ${(awayWin/totalProb*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Les deux équipes marquent :</strong> ${(bttsYes/totalProb*100).toFixed(2)}%</p>`;
+  html += `<p><strong>Au moins une ne marque pas :</strong> ${(bttsNo/totalProb*100).toFixed(2)}%</p>`;
+
   document.getElementById("result").innerHTML = html;
 }
 
+// --- Dark Mode ---
 function toggleDarkMode() {
   const body = document.body;
   const btn = document.getElementById("darkModeBtn");
   body.classList.toggle('dark-mode');
-  
-  // Change icône selon le mode
-  if (body.classList.contains("dark-mode")) {
-    btn.textContent = "☀️"; // Soleil pour mode sombre
-  } else {
-    btn.textContent = "🌙"; // Lune pour mode clair
-  }
+
+  if (body.classList.contains("dark-mode")) btn.textContent = "☀️";
+  else btn.textContent = "🌙";
 }
