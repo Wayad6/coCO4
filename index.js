@@ -79,7 +79,7 @@ function calculer() {
   const awayAvgScored   = aGS / aM;
   const awayAvgConceded = aGC / aM;
 
-  const lambdaHome = (homeAvgScored + awayAvgConceded) / 2 + 0.15;
+  const lambdaHome = (homeAvgScored + awayAvgConceded + 0.30) / 2;
   const lambdaAway = (awayAvgScored + homeAvgConceded) / 2;
 
   // --- Génération de tous les scores (0 à 10) ---
